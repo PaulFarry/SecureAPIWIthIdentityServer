@@ -11,9 +11,13 @@ using System.Net.Http;
 using System.IO;
 using ImageGallery.Client.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using System.Diagnostics;
 
 namespace ImageGallery.Client.Controllers
 {
+    [Authorize]
     public class GalleryController : Controller
     {
         private readonly IImageGalleryHttpClient _imageGalleryHttpClient;
@@ -27,6 +31,8 @@ namespace ImageGallery.Client.Controllers
 
         public async Task<IActionResult> Index()
         {
+            await WriteOutIdentityInformation();
+
             // call the API
             var httpClient = _imageGalleryHttpClient.GetClient();
 
@@ -164,6 +170,22 @@ namespace ImageGallery.Client.Controllers
             }
 
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
+        }
+
+        public async Task Logout()
+        {
+            await HttpContext.SignOutAsync("Cookies");
+            await HttpContext.SignOutAsync("oidc");
+        }
+
+        public async Task WriteOutIdentityInformation()
+        {
+            var identityToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken);
+            Debug.WriteLine($"Identity Token: {identityToken}");
+            foreach (var claim in User.Claims)
+            {
+                Debug.WriteLine($"Claim Type: {claim.Type} - Claim Value : {claim.Value}");
+            }
         }
     }
 }

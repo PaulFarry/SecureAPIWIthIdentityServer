@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageGallery.Model", "Image
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGallery.Client", "ImageGallery.Client\ImageGallery.Client.csproj", "{7747124A-4D3D-4031-AD7C-1B925C250461}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Farry.IDP", "Farry.IDP\Farry.IDP.csproj", "{563C42A6-0A1D-470B-B920-9564B3BCCA87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7747124A-4D3D-4031-AD7C-1B925C250461}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7747124A-4D3D-4031-AD7C-1B925C250461}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7747124A-4D3D-4031-AD7C-1B925C250461}.Release|Any CPU.Build.0 = Release|Any CPU
+		{563C42A6-0A1D-470B-B920-9564B3BCCA87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{563C42A6-0A1D-470B-B920-9564B3BCCA87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{563C42A6-0A1D-470B-B920-9564B3BCCA87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{563C42A6-0A1D-470B-B920-9564B3BCCA87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -28,6 +28,26 @@ namespace ImageGallery.Client
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Cookies";
+                options.DefaultChallengeScheme = "oidc";
+            })
+            .AddCookie("Cookies")
+            .AddOpenIdConnect("oidc", options =>
+            {
+                options.SignInScheme = "Cookies";
+                options.Authority = "https://localhost:44350/";
+                options.ClientId = "imagegalleryclient";
+                options.ResponseType = "code id_token";
+                options.Scope.Add("openid");
+                options.Scope.Add("profile");
+                options.SaveTokens = true;
+                options.ClientSecret = "secret";
+
+
+            });
+
             // Add framework services.
             services.AddMvc();
 
@@ -58,6 +78,7 @@ namespace ImageGallery.Client
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
