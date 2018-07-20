@@ -48,6 +48,7 @@ namespace ImageGallery.Client
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
                 options.Scope.Add("address"); //Request Access to the address.
+                options.Scope.Add("roles");
                 options.SaveTokens = true;
                 options.ClientSecret = "secret";
                 options.GetClaimsFromUserInfoEndpoint = true;
@@ -58,6 +59,8 @@ namespace ImageGallery.Client
                 //Make sure these are removed from the claims
                 options.ClaimActions.DeleteClaim("sid");
                 options.ClaimActions.DeleteClaim("idp");
+
+                options.ClaimActions.MapUniqueJsonKey("role", "role");
             });
 
             // Add framework services.

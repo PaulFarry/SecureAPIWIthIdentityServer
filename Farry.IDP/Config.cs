@@ -21,7 +21,8 @@ namespace Farry.IDP
                     {
                         new Claim("given_name", "Frank"),
                         new Claim("family_name", "Underwood"),
-                        new Claim(IdentityServerConstants.StandardScopes.Address, "Main Road 1")
+                        new Claim(IdentityServerConstants.StandardScopes.Address, "Main Road 1"),
+                        new Claim("role", "FreeUser"),
                     }
                 },
                 new TestUser
@@ -33,7 +34,8 @@ namespace Farry.IDP
                     {
                         new Claim("given_name", "Claire"),
                         new Claim("family_name", "Underwood"),
-                        new Claim(IdentityServerConstants.StandardScopes.Address, "Big Street 2")
+                        new Claim(IdentityServerConstants.StandardScopes.Address, "Big Street 2"),
+                        new Claim("role", "PaidUser"),
                     }
                 }
             };
@@ -52,7 +54,14 @@ namespace Farry.IDP
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResources.Address()
+                new IdentityResources.Address(),
+                new IdentityResource(
+                    "roles",
+                    "Your roles(s)",
+                    new List<string>
+                    {
+                        "role"
+                    })
             };
         }
 
@@ -84,6 +93,7 @@ namespace Farry.IDP
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Address,
+                        "roles"
                     }
                 }
         };
