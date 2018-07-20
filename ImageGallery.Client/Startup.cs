@@ -56,7 +56,6 @@ namespace ImageGallery.Client
                 //Make sure these are removed from the claims
                 options.ClaimActions.DeleteClaim("sid");
                 options.ClaimActions.DeleteClaim("idp");
-                options.ClaimActions.DeleteClaim("address"); //Don't store the address in the cookie
             });
 
             // Add framework services.
