@@ -45,16 +45,18 @@ namespace ImageGallery.Client
                 options.ResponseType = "code id_token";
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
+                options.Scope.Add("address"); //Request Access to the address.
                 options.SaveTokens = true;
                 options.ClientSecret = "secret";
                 options.GetClaimsFromUserInfoEndpoint = true;
-                
+
                 //Make sure the AMR stays in the claims
                 options.ClaimActions.Remove("amr");
 
                 //Make sure these are removed from the claims
                 options.ClaimActions.DeleteClaim("sid");
                 options.ClaimActions.DeleteClaim("idp");
+                options.ClaimActions.DeleteClaim("address"); //Don't store the address in the cookie
             });
 
             // Add framework services.

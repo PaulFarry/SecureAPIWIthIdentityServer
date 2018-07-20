@@ -21,6 +21,7 @@ namespace Farry.IDP
                     {
                         new Claim("given_name", "Frank"),
                         new Claim("family_name", "Underwood"),
+                        new Claim(IdentityServerConstants.StandardScopes.Address, "Main Road 1")
                     }
                 },
                 new TestUser
@@ -32,6 +33,7 @@ namespace Farry.IDP
                     {
                         new Claim("given_name", "Claire"),
                         new Claim("family_name", "Underwood"),
+                        new Claim(IdentityServerConstants.StandardScopes.Address, "Big Street 2")
                     }
                 }
             };
@@ -40,7 +42,7 @@ namespace Farry.IDP
         {
             return new List<ApiResource>
                 {
-                    new ApiResource("api1", "My API") 
+                    new ApiResource("api1", "My API")
                 };
         }
 
@@ -50,6 +52,7 @@ namespace Farry.IDP
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResources.Address()
             };
         }
 
@@ -76,7 +79,12 @@ namespace Farry.IDP
                     },
 
                     // scopes that client has access to
-                    AllowedScopes = {IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile }
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Address,
+                    }
                 }
         };
         }
