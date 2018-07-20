@@ -31,6 +31,8 @@ namespace ImageGallery.Client
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            var idp = Configuration["IdentityAuthority"];
+
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = "Cookies";
@@ -40,7 +42,7 @@ namespace ImageGallery.Client
             .AddOpenIdConnect("oidc", options =>
             {
                 options.SignInScheme = "Cookies";
-                options.Authority = "https://localhost:44350/";
+                options.Authority = idp;
                 options.ClientId = "imagegalleryclient";
                 options.ResponseType = "code id_token";
                 options.Scope.Add("openid");
