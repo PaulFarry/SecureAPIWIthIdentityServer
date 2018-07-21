@@ -48,6 +48,10 @@ namespace ImageGallery.Client.Controllers
                 galleryIndexViewModel.BaseUrl = _configuration["ApiLocation"];
                 return View(galleryIndexViewModel);
             }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized || response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+            {
+                return RedirectToAction("AccessDenied", "Authorization");
+            }
 
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
