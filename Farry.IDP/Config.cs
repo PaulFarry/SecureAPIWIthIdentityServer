@@ -44,7 +44,7 @@ namespace Farry.IDP
         {
             return new List<ApiResource>
                 {
-                    new ApiResource(ImageGalleryApi, "Image Gallery API")
+                    new ApiResource(ImageGalleryApi, "Image Gallery API", new List<string>{ "role" })
                 };
         }
 
