@@ -14,7 +14,7 @@ namespace Farry.IDP
             {
                 new TestUser
                 {
-                    SubjectId = "E78E0654-2F41-42AB-B71C-D37C8341C597",
+                    SubjectId = "d860efca-22d9-47fd-8249-791ba61b07c7",
                     Username = "Frank",
                     Password = "password",
                     Claims = new List<Claim>
@@ -27,7 +27,7 @@ namespace Farry.IDP
                 },
                 new TestUser
                 {
-                    SubjectId = "EE81E65A-91C0-46EA-A66F-2542DF19A749",
+                    SubjectId = "b7539694-97e7-4dfe-84da-b4256e1ff5c7",
                     Username = "Claire",
                     Password = "password",
                     Claims = new List<Claim>
