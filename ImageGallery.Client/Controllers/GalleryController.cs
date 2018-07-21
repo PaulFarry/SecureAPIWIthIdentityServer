@@ -128,6 +128,7 @@ namespace ImageGallery.Client.Controllers
             return View();
         }
 
+        [Authorize(Roles = "PaidUser")]
         public async Task<IActionResult> OrderFrame()
         {
             var discoveryClient = new DiscoveryClient(_configuration["IdentityAuthority"]);
