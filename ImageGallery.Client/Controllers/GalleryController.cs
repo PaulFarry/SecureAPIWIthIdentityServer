@@ -127,6 +127,7 @@ namespace ImageGallery.Client.Controllers
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
 
+        [Authorize(Roles = "PaidUser")]
         public IActionResult AddImage()
         {
             return View();
@@ -154,6 +155,7 @@ namespace ImageGallery.Client.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "PaidUser")]
         public async Task<IActionResult> AddImage(AddImageViewModel addImageViewModel)
         {
             if (!ModelState.IsValid)
