@@ -44,9 +44,11 @@ namespace Farry.IDP
         {
             return new List<ApiResource>
                 {
-                    new ApiResource("api1", "My API")
+                    new ApiResource(ImageGalleryApi, "Image Gallery API")
                 };
         }
+
+        private static readonly string ImageGalleryApi = "imagegalleryapi";
 
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
@@ -61,7 +63,8 @@ namespace Farry.IDP
                     new List<string>
                     {
                         "role"
-                    })
+                    }),
+
             };
         }
 
@@ -93,8 +96,9 @@ namespace Farry.IDP
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Address,
-                        "roles"
-                    }
+                        "roles",
+                     ImageGalleryApi
+                   }
                 }
         };
         }

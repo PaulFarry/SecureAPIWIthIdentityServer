@@ -14,6 +14,7 @@ namespace ImageGallery.API.Controllers
 {
     [Route("api/images")]
     [ApiController]
+    [Authorize]
     public class ImagesController : ControllerBase
     {
         private readonly IGalleryRepository _galleryRepository;

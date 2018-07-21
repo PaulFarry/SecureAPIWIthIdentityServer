@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4.AccessTokenValidation;
 using ImageGallery.API.Entities;
 using ImageGallery.API.Services;
 using Microsoft.AspNetCore.Builder;
@@ -29,6 +30,14 @@ namespace Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+            .AddIdentityServerAuthentication(options =>
+            {
+                options.Authority = Configuration["IdentityAuthority"];
+                options.ApiName = "imagegalleryapi";
+            });
+
             // register the DbContext on the container, getting the connection string from
             // appSettings (note: use this during development; in a production environment,
             // it's better to store the connection string in an environment variable)
@@ -39,6 +48,7 @@ namespace Web
             services.AddScoped<IGalleryRepository, GalleryRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +63,6 @@ namespace Web
             {
                 app.UseHsts();
             }
-
 
 
             app.UseHttpsRedirection();
@@ -77,6 +86,7 @@ namespace Web
                 });
             }
 
+            app.UseAuthentication();
             app.UseStaticFiles();
 
             AutoMapper.Mapper.Initialize(cfg =>

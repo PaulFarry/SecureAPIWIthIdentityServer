@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authentication;
+using System.Threading.Tasks;
 
 namespace ImageGallery.Client.Services
 {
@@ -27,6 +30,14 @@ namespace ImageGallery.Client.Services
 
         public HttpClient GetClient()
         {
+            var accessToken = string.Empty;
+
+            var currentContext = _httpContextAccessor.HttpContext;
+            accessToken = currentContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken).Result;
+            if (!string.IsNullOrEmpty(accessToken))
+            {
+                _httpClient.SetBearerToken(accessToken);
+            }
             return _httpClient;
         }
     }
