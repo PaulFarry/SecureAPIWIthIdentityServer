@@ -104,6 +104,11 @@ namespace Farry.IDP
                     IdentityTokenLifetime = 300, //Default for demo purposes
                     AuthorizationCodeLifetime = 300, //Default for demo
                     AccessTokenLifetime = 120,
+                    AllowOfflineAccess = true,
+                    AbsoluteRefreshTokenLifetime = 2592000, //Default for demo purposes (30days)  2592000/ (60 *60 * 24)
+                    //RefreshTokenExpiration = TokenExpiration.Sliding, //
+                    UpdateAccessTokenClaimsOnRefresh = true,
+
                     // scopes that client has access to
                     AllowedScopes =
                     {
