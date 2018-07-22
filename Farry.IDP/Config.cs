@@ -101,7 +101,9 @@ namespace Farry.IDP
                     {
                         new Secret("secret".Sha256())
                     },
-
+                    IdentityTokenLifetime = 300, //Default for demo purposes
+                    AuthorizationCodeLifetime = 300, //Default for demo
+                    AccessTokenLifetime = 120,
                     // scopes that client has access to
                     AllowedScopes =
                     {
