@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IdentityServer4.AccessTokenValidation;
+﻿using IdentityServer4.AccessTokenValidation;
 using ImageGallery.API.Entities;
 using ImageGallery.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Web
 {
@@ -37,6 +32,18 @@ namespace Web
                 options.Authority = Configuration["IdentityAuthority"];
                 options.ApiName = "imagegalleryapi";
             });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("MustOwnImage",
+                policyBuilder =>
+                {
+                    policyBuilder.RequireAuthenticatedUser();
+                    policyBuilder.AddRequirements(new ImageGallery.API.Authorization.Requirements.MustOwnImage());
+                });
+            });
+
+            services.AddScoped<IAuthorizationHandler, ImageGallery.API.Authorization.Handlers.MustOwnImage>();
 
             // register the DbContext on the container, getting the connection string from
             // appSettings (note: use this during development; in a production environment,
