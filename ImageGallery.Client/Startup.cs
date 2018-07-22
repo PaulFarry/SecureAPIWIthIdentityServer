@@ -35,6 +35,17 @@ namespace ImageGallery.Client
 
             var idp = Configuration["IdentityAuthority"];
 
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("CanOrderFrame", policyBuilder =>
+                {
+                    policyBuilder.RequireAuthenticatedUser();
+                    policyBuilder.RequireClaim("country", "be");
+                    policyBuilder.RequireClaim("subscriptionlevel", "PaidUser");
+                });
+            });
+
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = "Cookies";
@@ -56,6 +67,9 @@ namespace ImageGallery.Client
                 options.Scope.Add("roles");
                 options.Scope.Add("imagegalleryapi");
 
+                options.Scope.Add("subscriptionlevel");
+                options.Scope.Add("country");
+
                 options.SaveTokens = true;
                 options.ClientSecret = "secret";
                 options.GetClaimsFromUserInfoEndpoint = true;
@@ -68,6 +82,8 @@ namespace ImageGallery.Client
                 options.ClaimActions.DeleteClaim("idp");
 
                 options.ClaimActions.MapUniqueJsonKey("role", "role");
+                options.ClaimActions.MapUniqueJsonKey("subscriptionlevel", "subscriptionlevel");
+                options.ClaimActions.MapUniqueJsonKey("country", "country");
 
 
                 //Need to map the claims into the Identity object

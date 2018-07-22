@@ -23,6 +23,8 @@ namespace Farry.IDP
                         new Claim("family_name", "Underwood"),
                         new Claim(IdentityServerConstants.StandardScopes.Address, "Main Road 1"),
                         new Claim("role", "FreeUser"),
+                        new Claim("subscriptionlevel" , "FreeUser"),
+                        new Claim("country" , "nl")
                     }
                 },
                 new TestUser
@@ -36,6 +38,8 @@ namespace Farry.IDP
                         new Claim("family_name", "Underwood"),
                         new Claim(IdentityServerConstants.StandardScopes.Address, "Big Street 2"),
                         new Claim("role", "PaidUser"),
+                        new Claim("subscriptionlevel" , "PaidUser"),
+                        new Claim("country" , "be")
                     }
                 }
             };
@@ -64,7 +68,15 @@ namespace Farry.IDP
                     {
                         "role"
                     }),
-
+                    new IdentityResource(
+                    "country",
+                    "The country you live in",
+                    new List<string>{"country"}),
+                new IdentityResource(
+                    "subscriptionlevel",
+                    "Your subscription level",
+                    new List<string> {"subscriptionlevel"}
+                )
             };
         }
 
@@ -97,7 +109,9 @@ namespace Farry.IDP
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Address,
                         "roles",
-                     ImageGalleryApi
+                        ImageGalleryApi,
+                        "country",
+                        "subscriptionlevel"
                    }
                 }
         };
