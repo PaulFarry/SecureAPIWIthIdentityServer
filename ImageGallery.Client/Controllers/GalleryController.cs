@@ -35,7 +35,7 @@ namespace ImageGallery.Client.Controllers
             await WriteOutIdentityInformation();
 
             // call the API
-            var httpClient = _imageGalleryHttpClient.GetClient();
+            var httpClient = _imageGalleryHttpClient.GetClient().Result;
 
             var response = await httpClient.GetAsync("api/images").ConfigureAwait(false);
 
@@ -59,7 +59,7 @@ namespace ImageGallery.Client.Controllers
         public async Task<IActionResult> EditImage(Guid id)
         {
             // call the API
-            var httpClient = _imageGalleryHttpClient.GetClient();
+            var httpClient = _imageGalleryHttpClient.GetClient().Result;
 
             var response = await httpClient.GetAsync($"api/images/{id}").ConfigureAwait(false);
 
@@ -97,7 +97,7 @@ namespace ImageGallery.Client.Controllers
             var serializedImageForUpdate = JsonConvert.SerializeObject(imageForUpdate);
 
             // call the API
-            var httpClient = _imageGalleryHttpClient.GetClient();
+            var httpClient = _imageGalleryHttpClient.GetClient().Result;
 
             var response = await httpClient.PutAsync(
                 $"api/images/{editImageViewModel.Id}",
@@ -115,7 +115,7 @@ namespace ImageGallery.Client.Controllers
         public async Task<IActionResult> DeleteImage(Guid id)
         {
             // call the API
-            var httpClient = _imageGalleryHttpClient.GetClient();
+            var httpClient = _imageGalleryHttpClient.GetClient().Result;
 
             var response = await httpClient.DeleteAsync($"api/images/{id}").ConfigureAwait(false);
 
@@ -185,7 +185,7 @@ namespace ImageGallery.Client.Controllers
             var serializedImageForCreation = JsonConvert.SerializeObject(imageForCreation);
 
             // call the API
-            var httpClient = _imageGalleryHttpClient.GetClient();
+            var httpClient = _imageGalleryHttpClient.GetClient().Result;
 
             var response = await httpClient.PostAsync(
                 $"api/images",
