@@ -13,20 +13,26 @@ namespace ImageGallery.API.Services
         {
             _context = galleryContext;
         }
+
         public bool ImageExists(Guid id)
         {
             return _context.Images.Any(i => i.Id == id);
         }
-        
+
         public Image GetImage(Guid id)
         {
             return _context.Images.FirstOrDefault(i => i.Id == id);
         }
-  
+
+        public bool IsImageOwner(Guid imageId, string ownerId)
+        {
+            return _context.Images.Any(i => i.Id == imageId && i.OwnerId == ownerId);
+        }
+
         public IEnumerable<Image> GetImages(string ownerId)
         {
             return _context.Images
-                .Where(i=>i.OwnerId == ownerId)
+                .Where(i => i.OwnerId == ownerId)
                 .OrderBy(i => i.Title).ToList();
         }
 
@@ -72,6 +78,6 @@ namespace ImageGallery.API.Services
                 }
 
             }
-        }     
+        }
     }
 }
