@@ -1,6 +1,7 @@
 ﻿using IdentityModel;
 using ImageGallery.Client.Services;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 
 namespace ImageGallery.Client
 {
@@ -94,8 +96,18 @@ namespace ImageGallery.Client
                     NameClaimType = JwtClaimTypes.GivenName,
                     RoleClaimType = JwtClaimTypes.Role
                 };
-                
 
+                options.Events = new OpenIdConnectEvents
+                {
+                    OnRemoteFailure = context =>
+                    {
+                        context.Response.Redirect("/Authorization/AuthenticationFailed");
+                        context.HandleResponse();
+
+                        return Task.FromResult(0);
+                    }
+
+                };
 
             });
 

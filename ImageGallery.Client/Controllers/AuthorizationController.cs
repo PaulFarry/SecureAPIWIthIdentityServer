@@ -8,5 +8,10 @@ namespace ImageGallery.Client.Controllers
         {
             return View();
         }
+
+        public IActionResult AuthenticationFailed()
+        {
+            return View();
+        }
     }
 }
