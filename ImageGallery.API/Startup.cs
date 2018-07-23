@@ -31,6 +31,7 @@ namespace Web
             {
                 options.Authority = Configuration["IdentityAuthority"];
                 options.ApiName = "imagegalleryapi";
+                options.ApiSecret = "apisecret";
             });
 
             services.AddAuthorization(options =>

@@ -49,6 +49,9 @@ namespace Farry.IDP
             return new List<ApiResource>
                 {
                     new ApiResource(ImageGalleryApi, "Image Gallery API", new List<string>{ "role" })
+                    {
+                    ApiSecrets = { new Secret("apisecret".Sha256())}
+                    }
                 };
         }
 
@@ -90,6 +93,7 @@ namespace Farry.IDP
 
                     // no interactive user, use the clientid/secret for authentication
                     AllowedGrantTypes = GrantTypes.Hybrid,
+                    AccessTokenType = AccessTokenType.Reference,
                     RedirectUris = new List<string> {
                     "https://localhost:44360/signin-oidc"
                     },
