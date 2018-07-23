@@ -200,12 +200,6 @@ namespace ImageGallery.Client.Controllers
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
 
-        public async Task Logout()
-        {
-            await HttpContext.SignOutAsync("Cookies");
-            await HttpContext.SignOutAsync("oidc");
-        }
-
         public async Task WriteOutIdentityInformation()
         {
             var identityToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken);
@@ -215,5 +209,41 @@ namespace ImageGallery.Client.Controllers
                 Debug.WriteLine($"Claim Type: {claim.Type} - Claim Value : {claim.Value}");
             }
         }
+        public async Task Logout()
+        {
+            var disco = new DiscoveryClient(_configuration["IdentityAuthority"]);
+            var metaDataResponse = await disco.GetAsync();
+
+            var revocationClient = new TokenRevocationClient(metaDataResponse.RevocationEndpoint, "imagegalleryclient", "secret");
+
+            var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
+
+            if (!string.IsNullOrWhiteSpace(accessToken))
+            {
+                var revokedToken = await revocationClient.RevokeAccessTokenAsync(accessToken);
+                if (revokedToken.IsError)
+                {
+                    throw new Exception("Problem whilst revoking the access token", revokedToken.Exception);
+                }
+            }
+
+            var refreshToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
+
+            if (!string.IsNullOrWhiteSpace(refreshToken))
+            {
+                var revokedToken = await revocationClient.RevokeRefreshTokenAsync(refreshToken);
+                if (revokedToken.IsError)
+                {
+                    throw new Exception("Problem whilst revoking the refresh token", revokedToken.Exception);
+                }
+            }
+
+
+
+
+            await HttpContext.SignOutAsync("Cookies");
+            await HttpContext.SignOutAsync("oidc");
+        }
+
     }
 }
